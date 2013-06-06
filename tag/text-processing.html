@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <title>Grad Hustle - text processing</title>
+        <link rel="stylesheet" href="/theme/css/main.css">
+                
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Grad Hustle </a></h1>
+                <nav><ul>
+                                                                                    <li ><a href="/category/linuxunix.html">Linux/Unix</a></li>
+                                                </ul></nav>
+        </header><!-- /#banner -->
+                
+            
+
+                            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/text-processing-ninja-for-bioinformatics.html">Text Processing Ninja (for bioinformatics)</a></h1> 
+                    <footer class="post-info">
+        <abbr class="published" title="2013-06-06T01:53:00">
+                Thu 06 June 2013
+        </abbr>
+
+                <address class="vcard author">
+                By <a class="url fn" href="/author/likit-preeyanon.html">Likit Preeyanon</a>
+        </address>
+        <p>In <a href="/category/linuxunix.html">Linux/Unix</a>. </p>
+<p>tags: <a href="/tag/bioinformatics.html">bioinformatics</a><a href="/tag/text-processing.html">text processing</a><a href="/tag/linux.html">Linux</a><a href="/tag/unix.html">Unix</a><a href="/tag/python.html">Python</a></p>
+</footer><!-- /.post-info --><h1>Introduction</h1>
+<p>In this tutorial, I put together some useful Linux/Unix commands that
+I found useful for a day-to-day text processing task. I used the tutorial in
+GED lab meeting to help Summer students (SROP) get started with sequence and
+data analyses.</p>
+<p>I did not cover all basic functionality of each tool because you will always
+find tutorials and basic examples online. I also assume that you are familiar
+with Linux/Unix command line toos such as pipe, redirection and etc.</p>
+<h2>Display text with <em>cat</em> command</h2>
+<p><strong>cat</strong> is a very simple command you can use to display content in a file.
+Simply run:</p>
+<div class="highlight"><pre><span class="n">cat</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will display all content in sample.txt file.</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr2</span>    <span class="mi">2000</span>    <span class="mi">3400</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr2</span>    <span class="mi">3000</span>    <span class="mi">5000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr3</span>    <span class="mi">3001</span>    <span class="mi">5002</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<p>You can also run:</p>
+<div class="highlight"><pre><span class="n">cat</span> <span class="o">-</span><span class="n">T</span> <span class="o">-</span><span class="n">e</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>to display tab and the end of line characters. This is helpful when you need
+to investigate the file format.</p>
+<div class="highlight"><pre>chr1^I1000^I2000^Igene^I+<span class="err">$</span>
+chr1^I1000^I2000^Iexon^I+<span class="err">$</span>
+chr2^I2000^I3400^Iexon^I+<span class="err">$</span>
+chr2^I3000^I5000^Iexon^I+<span class="err">$</span>
+chr3^I3001^I5002^Iexon^I+<span class="err">$</span>
+chr12^I1000^I2000^Igene^I+<span class="err">$</span>
+chr12^I1000^I2000^Iintron^I+<span class="err">$</span>
+</pre></div>
+
+
+<p>You can also run:</p>
+<div class="highlight"><pre><span class="n">cat</span> <span class="o">-</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>then type some texts and hit Ctrl-D to add texts to the beginning of
+sample.txt.</p>
+<h2>Manipulate columns and rows with <em>awk</em></h2>
+<p><strong>awk</strong> accepts conditional expressions that you can use to select or filter
+data in a text file.</p>
+<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;$2&gt;=2000&amp;&amp;$3&lt;=4000&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will select rows of which the second and third columns have a value between
+2000 to 3000.</p>
+<div class="highlight"><pre><span class="n">chr2</span>    <span class="mi">2000</span>    <span class="mi">3400</span>    <span class="n">exon</span>    <span class="o">+</span>
+</pre></div>
+
+
+<p>You can also give <strong>awk</strong> a pattern to search for.</p>
+<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;/chr3/&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will search for rows that contain chr3.</p>
+<div class="highlight"><pre><span class="n">chr3</span>    <span class="mi">3001</span>    <span class="mi">5002</span>    <span class="n">exon</span>    <span class="o">+</span>
+</pre></div>
+
+
+<p>To search for a match in a specific column use:</p>
+<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;$4 ~/gene/&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p><strong>awk</strong> will select rows that contain "gene" in the 4th column.</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+</pre></div>
+
+
+<p>To print out specific columns use:</p>
+<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;{print $1,$2,$3}&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>Only 1st, 2nd and 3rd columns are printed.</p>
+<div class="highlight"><pre><span class="n">chr1</span> <span class="mi">1000</span> <span class="mi">2000</span>
+<span class="n">chr1</span> <span class="mi">1000</span> <span class="mi">2000</span>
+<span class="n">chr2</span> <span class="mi">2000</span> <span class="mi">3400</span>
+<span class="n">chr2</span> <span class="mi">3000</span> <span class="mi">5000</span>
+<span class="n">chr3</span> <span class="mi">3001</span> <span class="mi">5002</span>
+<span class="n">chr12</span> <span class="mi">1000</span> <span class="mi">2000</span>
+<span class="n">chr12</span> <span class="mi">1000</span> <span class="mi">2000</span>
+</pre></div>
+
+
+<p>You can also use print command to swap the columns. For example,</p>
+<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;{print $2,$3,$1}&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will swap column 1 and column 2.</p>
+<div class="highlight"><pre><span class="mi">1000</span> <span class="mi">2000</span> <span class="n">chr1</span>
+<span class="mi">1000</span> <span class="mi">2000</span> <span class="n">chr1</span>
+<span class="mi">2000</span> <span class="mi">3400</span> <span class="n">chr2</span>
+<span class="mi">3000</span> <span class="mi">5000</span> <span class="n">chr2</span>
+<span class="mi">3001</span> <span class="mi">5002</span> <span class="n">chr3</span>
+<span class="mi">1000</span> <span class="mi">2000</span> <span class="n">chr12</span>
+<span class="mi">1000</span> <span class="mi">2000</span> <span class="n">chr12</span>
+</pre></div>
+
+
+<h1>Search with <em>grep</em></h1>
+<p>With -c option, grep displays the number of lines that contain a search word.
+We can use this option to count sequences in FASTA format.</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">c</span> <span class="s">&#39;^&gt;&#39;</span> <span class="n">par</span><span class="o">.</span><span class="n">fa</span>
+</pre></div>
+
+
+<p>There are five sequences in par.fa. "^" means the beginning of the line.</p>
+<div class="highlight"><pre><span class="mi">5</span>
+</pre></div>
+
+
+<p>By default, grep will also a substring, therefore</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="n">chr1</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will match both "chr1" and "chr12".</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<p>If you only want to search for "chr1", you need to add -w option.
+In this case, <strong>grep</strong> will only search for a whole word that matches the
+search word.</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">w</span> <span class="n">chr1</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
+</pre></div>
+
+
+<p>You can also search for more than one keywords using -e option.</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">e</span> <span class="n">gene</span> <span class="o">-</span><span class="n">e</span> <span class="n">intron</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will search for lines that contain <strong>either</strong> "gene" or "intron".</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<p>You can also use OR operator to do the same thing.</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="s">&#39;gene\|intron&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>Or you can use egrep.</p>
+<div class="highlight"><pre><span class="n">egrep</span> <span class="s">&#39;gene|intron&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p><strong>grep</strong> also accepts AND operator. To search for "chr1" and "gene" run:</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;chr1\s.*gene&quot;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>You will get:</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>
+</pre></div>
+
+
+<p>To do invert search, use -v option. For example,</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">v</span> <span class="n">exon</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will exclude any line that has exon in it.</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<p>With -l option, <strong>grep</strong> will display a filename instead of a line
+that contain the search word.</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">l</span> <span class="n">chr12</span> <span class="o">*</span>
+</pre></div>
+
+
+<p>will give:</p>
+<div class="highlight"><pre><span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>witn -c, <strong>grep</strong> will also display the number of lines that contain the
+search word in a file.</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">c</span> <span class="n">chr12</span> <span class="o">*</span>
+</pre></div>
+
+
+<p>You will get:</p>
+<div class="highlight"><pre><span class="n">sample2</span><span class="o">.</span><span class="n">txt:0</span>
+<span class="n">sample3</span><span class="o">.</span><span class="n">txt:2</span>
+<span class="n">sample4</span><span class="o">.</span><span class="n">txt:0</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">txt:2</span>
+</pre></div>
+
+
+<p>With -n, <strong>grep</strong> will display a line number and a line that contain the
+search word.</p>
+<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">n</span> <span class="n">chr12</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will give:</p>
+<div class="highlight"><pre><span class="n">sample3</span><span class="o">.</span><span class="n">txt:6:chr12</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">gene</span><span class="p">,,,,,,</span><span class="o">+</span>
+<span class="n">sample3</span><span class="o">.</span><span class="n">txt:7:chr12</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">intron</span><span class="p">,,,,</span><span class="o">+</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">txt:6:chr12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">txt:7:chr12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<h2>Search and substitute with <em>sed</em></h2>
+<p>To substitue a word/pattern use,</p>
+<div class="highlight"><pre><span class="n">sed</span> <span class="s">&#39;s/chr/scaffold/&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p><strong>sed</strong> will substitute "chr" with "scaffold".</p>
+<div class="highlight"><pre><span class="n">scaffold1</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">scaffold1</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">scaffold2</span>   <span class="mi">2000</span>    <span class="mi">3400</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">scaffold2</span>   <span class="mi">3000</span>    <span class="mi">5000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">scaffold3</span>   <span class="mi">3001</span>    <span class="mi">5002</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">scaffold12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">scaffold12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<p>You can also remove a word by substituting it with a blank.</p>
+<div class="highlight"><pre><span class="n">sed</span> <span class="s">&#39;s/chr//&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>You will get:</p>
+<div class="highlight"><pre><span class="mi">1</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="mi">1</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="mi">2</span>   <span class="mi">2000</span>    <span class="mi">3400</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="mi">2</span>   <span class="mi">3000</span>    <span class="mi">5000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="mi">3</span>   <span class="mi">3001</span>    <span class="mi">5002</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="mi">12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="mi">12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<p>To add a word to the beginning of the line use:</p>
+<div class="highlight"><pre><span class="n">sed</span> <span class="s">&#39;s/^/chr/&#39;</span> <span class="n">sample2</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>sample2.txt original content is</p>
+<div class="highlight"><pre><span class="mi">1</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="mi">1</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="mi">2</span>   <span class="mi">2000</span>    <span class="mi">3400</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="mi">2</span>   <span class="mi">3000</span>    <span class="mi">5000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="mi">3</span>   <span class="mi">3001</span>    <span class="mi">5002</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="mi">12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="mi">12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<p>with the above command, you will get:</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr2</span>    <span class="mi">2000</span>    <span class="mi">3400</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr2</span>    <span class="mi">3000</span>    <span class="mi">5000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr3</span>    <span class="mi">3001</span>    <span class="mi">5002</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<h2>Translate with <em>tr</em></h2>
+<p>I rarely use this command, but it can be used to deal with messed up csv or
+spece/tab delimited files.
+For example, you are handed a file with this format:</p>
+<div class="highlight"><pre><span class="n">chr1</span><span class="p">,,,,,,</span><span class="mi">1000</span><span class="p">,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">gene</span><span class="p">,,,,</span><span class="o">+</span>
+<span class="n">chr1</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">exon</span><span class="p">,,,,</span><span class="o">+</span>
+<span class="n">chr2</span><span class="p">,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="mi">3400</span><span class="p">,,,,</span><span class="n">exon</span><span class="p">,,,,</span><span class="o">+</span>
+<span class="n">chr2</span><span class="p">,,,,</span><span class="mi">3000</span><span class="p">,,,,,,,</span><span class="mi">5000</span><span class="p">,,,,</span><span class="n">exon</span><span class="p">,,,,,,,</span><span class="o">+</span>
+<span class="n">chr3</span><span class="p">,,,,</span><span class="mi">3001</span><span class="p">,,,,</span><span class="mi">5002</span><span class="p">,,,,</span><span class="n">exon</span><span class="p">,,,,</span><span class="o">+</span>
+<span class="n">chr12</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">gene</span><span class="p">,,,,,,</span><span class="o">+</span>
+<span class="n">chr12</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">intron</span><span class="p">,,,,</span><span class="o">+</span>
+</pre></div>
+
+
+<p>You can try to use <strong>awk</strong> to print the first three columns.</p>
+<div class="highlight"><pre><span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="s">&#39;,&#39;</span> <span class="s">&#39;{print $1,$2,$3}&#39;</span>
+</pre></div>
+
+
+<p>But here is what you get.</p>
+<div class="highlight"><pre><span class="n">chr1</span>  
+<span class="n">chr1</span>  
+<span class="n">chr2</span>  
+<span class="n">chr2</span>  
+<span class="n">chr3</span>  
+<span class="n">chr12</span>  
+<span class="n">chr12</span>
+</pre></div>
+
+
+<p><strong>awk</strong> fails to recognize the columns.
+You can also try to use ",,,," instead.</p>
+<div class="highlight"><pre><span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="s">&#39;,,,,&#39;</span> <span class="s">&#39;{print $1,$2,$3}&#39;</span> <span class="n">sample3</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>but you still cannot get rid of all commas.</p>
+<div class="highlight"><pre><span class="n">chr1</span> <span class="p">,,</span><span class="mi">1000</span> <span class="mi">2000</span>
+<span class="n">chr1</span> <span class="mi">1000</span> 
+<span class="n">chr2</span> <span class="mi">2000</span> <span class="mi">3400</span>
+<span class="n">chr2</span> <span class="mi">3000</span> <span class="p">,,,</span><span class="mi">5000</span>
+<span class="n">chr3</span> <span class="mi">3001</span> <span class="mi">5002</span>
+<span class="n">chr12</span> <span class="mi">1000</span> <span class="mi">2000</span>
+<span class="n">chr12</span> <span class="mi">1000</span> <span class="p">,,,</span><span class="mi">2000</span>
+</pre></div>
+
+
+<p>Now we can try using <strong>tr</strong> to collapse multiple commas into one and replace it
+with a tab.</p>
+<div class="highlight"><pre><span class="nb">tr</span> <span class="o">-</span><span class="n">s</span> <span class="s">&#39;,&#39;</span> <span class="s">&#39;\t&#39;</span> <span class="o">&lt;</span> <span class="n">sample3</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">cat</span> <span class="o">-</span><span class="n">Te</span>
+</pre></div>
+
+
+<p>The output is piped to <strong>cat</strong> command to display a tab character.</p>
+<div class="highlight"><pre>chr1^I1000^I2000^Igene^I+<span class="err">$</span>
+chr1^I1000^I2000^Iexon^I+<span class="err">$</span>
+chr2^I2000^I3400^Iexon^I+<span class="err">$</span>
+chr2^I3000^I5000^Iexon^I+<span class="err">$</span>
+chr3^I3001^I5002^Iexon^I+<span class="err">$</span>
+chr12^I1000^I2000^Igene^I+<span class="err">$</span>
+chr12^I1000^I2000^Iintron^I+<span class="err">$</span>
+</pre></div>
+
+
+<p>You can see that multiple commas are converted to a single tab.</p>
+<p><strong>tr</strong> can be used to convert other texts, for example:</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;accggtgt&quot;</span> <span class="o">|</span> <span class="nb">tr</span> <span class="n">a</span><span class="o">-</span><span class="n">z</span> <span class="n">A</span><span class="o">-</span><span class="n">Z</span>
+</pre></div>
+
+
+<p>will convert lowercase letters to uppercase letters.</p>
+<div class="highlight"><pre><span class="n">ACCGGTGT</span>
+</pre></div>
+
+
+<p>Or we can use it to convert a soft mask in genome sequence to a hard mask.</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;AAAGGTTGAGAGGTGCCaccggtgtCCCAAGGTTTT&quot;</span> <span class="o">|</span> <span class="nb">tr</span> <span class="n">a</span><span class="o">-</span><span class="n">z</span> <span class="n">X</span>
+</pre></div>
+
+
+<p>Here is what you will get:</p>
+<div class="highlight"><pre><span class="n">AAAGGTTGAGAGGTGCCXXXXXXXXCCCAAGGTTTT</span>
+</pre></div>
+
+
+<h2>Merge data with <em>paste</em> and <em>join</em> command</h2>
+<p><strong>paste</strong> command can be used to append columns from one file to another.
+For example, sample.txt contains:</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr2</span>    <span class="mi">2000</span>    <span class="mi">3400</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr2</span>    <span class="mi">3000</span>    <span class="mi">5000</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr3</span>    <span class="mi">3001</span>    <span class="mi">5002</span>    <span class="n">exon</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+</pre></div>
+
+
+<p>and sample4.txt contains:</p>
+<div class="highlight"><pre><span class="mi">1000</span>
+<span class="mi">1000</span>
+<span class="mi">3000</span>
+<span class="mi">5000</span>
+<span class="mi">2000</span>
+<span class="mi">3000</span>
+<span class="mi">6000</span>
+</pre></div>
+
+
+<p>We can add data from sample4.txt to sample.txt as the sixth column by
+the following command:</p>
+<div class="highlight"><pre><span class="n">paste</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span> <span class="n">sample4</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>Here is the output:</p>
+<div class="highlight"><pre><span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>   <span class="mi">1000</span>
+<span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>   <span class="mi">1000</span>
+<span class="n">chr2</span>    <span class="mi">2000</span>    <span class="mi">3400</span>    <span class="n">exon</span>    <span class="o">+</span>   <span class="mi">3000</span>
+<span class="n">chr2</span>    <span class="mi">3000</span>    <span class="mi">5000</span>    <span class="n">exon</span>    <span class="o">+</span>   <span class="mi">5000</span>
+<span class="n">chr3</span>    <span class="mi">3001</span>    <span class="mi">5002</span>    <span class="n">exon</span>    <span class="o">+</span>   <span class="mi">2000</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>   <span class="mi">3000</span>
+<span class="n">chr12</span>   <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>   <span class="mi">6000</span>
+</pre></div>
+
+
+<p><strong>join</strong> command works like <strong>paste</strong> command except that two files have to
+share a common column. For example, genes1.txt contain a list of genes with
+their expression levels like this:</p>
+<div class="highlight"><pre><span class="n">GNBP3</span>   <span class="mi">3400</span>
+<span class="n">GNBP1</span>   <span class="mi">50</span>
+<span class="n">Toll</span>    <span class="mi">1230</span>
+<span class="n">Spatzle</span> <span class="mi">2300</span>
+<span class="n">dorsal</span>  <span class="mi">57000</span>
+<span class="n">Dmik2</span>   <span class="mi">34000</span>
+</pre></div>
+
+
+<p>And genes2.txt contains the same list of genes with different expression
+levels. We can merge them together to get a list of genes with expression
+levels from two datasets with <strong>join</strong>.</p>
+<div class="highlight"><pre><span class="nb">join</span> <span class="n">genes1</span><span class="o">.</span><span class="n">txt</span> <span class="n">genes2</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>You will get:</p>
+<div class="highlight"><pre><span class="n">GNBP3</span> <span class="mi">3400</span> <span class="mi">400</span>
+<span class="n">GNBP1</span> <span class="mi">50</span> <span class="mi">30050</span>
+<span class="n">Toll</span> <span class="mi">1230</span> <span class="mi">1240</span>
+<span class="n">Spatzle</span> <span class="mi">2300</span> <span class="mi">4400</span>
+<span class="n">dorsal</span> <span class="mi">57000</span> <span class="mi">87000</span>
+<span class="n">Dmik2</span> <span class="mi">34000</span> <span class="mi">14000</span>
+</pre></div>
+
+
+<p>It works because genes1.txt and genes2.txt have a common column.</p>
+<p><strong>join</strong> command still works if the data are missing. For example:</p>
+<div class="highlight"><pre><span class="nb">join</span> <span class="n">genes1</span><span class="o">.</span><span class="n">txt</span> <span class="n">genes3</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>will give:</p>
+<div class="highlight"><pre><span class="n">GNBP3</span> <span class="mi">3400</span> <span class="mi">400</span>
+<span class="n">GNBP1</span> <span class="mi">50</span> <span class="mi">30050</span>
+<span class="n">Toll</span> <span class="mi">1230</span> 
+<span class="n">Spatzle</span> <span class="mi">2300</span> <span class="mi">4400</span>
+<span class="n">dorsal</span> <span class="mi">57000</span> <span class="mi">87000</span>
+<span class="n">Dmik2</span> <span class="mi">34000</span> <span class="mi">14000</span>
+</pre></div>
+
+
+<p>In this case, the expression of Toll gene in genes3.txt is missing.</p>
+<p>We can use -e STRING to replace a missing value with STRING. For example,</p>
+<div class="highlight"><pre><span class="nb">join</span> <span class="o">-</span><span class="n">e</span> <span class="n">NA</span> <span class="n">genes1</span><span class="o">.</span><span class="n">txt</span> <span class="n">genes3</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>the missing value is replaced by "NA".</p>
+<div class="highlight"><pre><span class="n">GNBP3</span> <span class="mi">3400</span> <span class="mi">400</span>
+<span class="n">GNBP1</span> <span class="mi">50</span> <span class="mi">30050</span>
+<span class="n">Toll</span> <span class="mi">1230</span> <span class="n">NA</span>
+<span class="n">Spatzle</span> <span class="mi">2300</span> <span class="mi">4400</span>
+<span class="n">dorsal</span> <span class="mi">57000</span> <span class="mi">87000</span>
+<span class="n">Dmik2</span> <span class="mi">34000</span> <span class="mi">14000</span>
+</pre></div>                </article>
+                                    <p class="paginator">
+        Page 1 / 1
+    </p>
+                            </aside><!-- /#featured -->
+                                                </ol><!-- /#posts-list -->
+                        </section><!-- /#content -->
+                    <section id="extras" class="body">
+                        <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                                                    <li><a href="http://getpelican.com/">Pelican</a></li>
+                                                    <li><a href="http://python.org/">Python.org</a></li>
+                                                    <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                                                    <li><a href="http://ged.msu.edu">GED lab</a></li>
+                                                </ul>
+                </div><!-- /.blogroll -->
+                                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/None" type="application/atom+xml" rel="alternate">atom feed</a></li>
+                            
+                                                    <li><a href="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Flikit.github.io&send=false&layout=box_count&width=450&show_faces=true&font&colorscheme=light&action=like&height=65">Facebook</a></li>
+                                                </ul>
+                </div><!-- /.social -->
+                </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
