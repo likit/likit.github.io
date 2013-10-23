@@ -15,6 +15,7 @@
                 <h1><a href="/">Grad Hustle </a></h1>
                 <nav><ul>
                                                                                     <li ><a href="/category/linuxunix.html">Linux/Unix</a></li>
+                                    <li ><a href="/category/next-gen-sequencing.html">Next-Gen Sequencing</a></li>
                                                 </ul></nav>
         </header><!-- /#banner -->
                 
@@ -31,29 +32,60 @@
                 <address class="vcard author">
                 By <a class="url fn" href="/author/likit-preeyanon.html">Likit Preeyanon</a>
         </address>
-        <p>In <a href="/category/linuxunix.html">Linux/Unix</a>. </p>
+        <p>In <a href="/category/next-gen-sequencing.html">Next-Gen Sequencing</a>. </p>
 <p>tags: <a href="/tag/ngs.html">NGS</a><a href="/tag/genome-assembly.html">Genome assembly</a><a href="/tag/pacbio.html">PacBio</a><a href="/tag/454.html">454</a><a href="/tag/smrt.html">SMRT</a></p>
 </footer><!-- /.post-info --><h1>Background</h1>
 <p>I have been collaborating with <a href="http://waltonlab.prl.msu.edu/labmembers/jonathan-walton">Jonathan Walton</a>,
 a professor in Plant biology department at MSU on genome assembly of a toxic mushroom called
-destroying angel (<em>A. bisporigera</em>).
+<strong>destroying angel</strong> (<em>A. bisporigera</em>).
 Right now, we have 9 datasets from PacBio in bas.h5 format (a movie file).
 The file size is about 1.5-3.0 Gb.
 Moreover, there are also files in fasta, fastq and ccs.fastq. However, I learned later that those
 files were useless because they were not quality filtered and still contained adapters.</p>
 <h1>Quality Filtering and Trimming with SMRT PreAssembly Pipeline</h1>
-<p>SMRT software is available on github <a href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Pipe-Reference-Guide-v2.0">here</a>
-and also pre-installed on EC2 machine (ami-fbbbcf92), so I launched EC2 instance and learned to run the software.</p>
+<p>SMRT pipeline is available on github <a href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Pipe-Reference-Guide-v2.0">here</a>
+and also pre-installed on EC2 machine (<em>ami-fbbbcf92</em>), so I launched EC2 instance and learned to run the software.</p>
 <p>The software has several pipelines, each consists of several modules.
 You can also build your own pipeline by putting the modules together.
 I ran <strong>AlloraSFilter</strong> module on the command line with smrtpipe.py with quality score 0.75 to all bas.h5 files.
 Here are the results.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Pre Filter</strong></th>
+<th><strong>Post Filter</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Polymerase Read Bases</td>
+<td>1,784,846,157 bp</td>
+<td>1,163,287,035 bp</td>
+</tr>
+<tr>
+<td>Polymerase Reads</td>
+<td>676,377</td>
+<td>193,263</td>
+</tr>
+<tr>
+<td>Polymerase Read Length</td>
+<td>2639 bp</td>
+<td>6019 bp</td>
+</tr>
+<tr>
+<td>Polymerase Read Quality</td>
+<td>0.301</td>
+<td>0.835</td>
+</tr>
+</tbody>
+</table>
 <p>As you can see, the polymerase read length increases from 2639 bp  to 6019 bp and the mean quality score also
 increases from 0.30 to 0.83. The plots below show a histogram of read lengths and quality scores of polymerase reads.</p>
-<p><img alt="lengths_histogram" src="/images/postFilterRLHistogram.png" /></p>
-<p><img alt="scores_histogram" src="/images/postFilterRSHistogram.png" /></p>
+<p><img alt="lengths_histogram" src="/static/images/postFilterRLHistogram.png" /></p>
+<p><img alt="scores_histogram" src="/static/images/postFilterRSHistogram.png" /></p>
 <p>And here is a histogram of subread lengths (after adaptors are removed).</p>
-<p><img alt="subreads_histogram" src="/images/filteredSubreadReport.png" /></p>
+<p><img alt="subreads_histogram" src="/static/images/filteredSubreadReport.png" /></p>
 <p>The module also generated fastq and fasta file for both subreads and consensus reads (CCS) from bas.h5 files.</p>
 <h1>Error Correction and Assembly</h1>
 <p>After that, I ran pacToCA to error correct subreads with CCS sequences and run Celera assembler to assembled corrected reads.
@@ -62,14 +94,14 @@ Basically, it built unique contigs from reads, and reads not used to build uniqu
 Then unique contigs were aligned to build contigs. Unique contigs that were not aligned to any other contigs were stored in degenerate contigs file.
 Therefore, the contigs file contains high confident contigs (multiple alignments) and degenerate file contains low confident contigs.
 Scaffolds contain scaffolded contigs; however, in our case no contigs were scaffolded, so it contains exactly the same contigs in contigs file.</p>
-<p>Unfortunately, the total length of high confident contigs is only 6.4Mbp whereas that of low confident contigs is about 8.9Mbp.
-The max contig size is 13,072 bp and the max size of degenerate contig is 78,021. N50 sizes are 2,147 bp and 997 bp respectively.
+<p>Unfortunately, the total length of high confident contigs is only 6.4 Mbp, whereas that of low confident contigs is about 8.9 Mbp.
+The max contig size is 13,072 bp and the max size of degenerate contig is 78,021 bp. N50 sizes are 2,147 bp and 997 bp respectively.
 I know the estimated size of the genome is ~50 Mbp, so this really low. However, I learned that the overall assembly size is
 comparable to that of the assembly done by other collaborators.
 So, the issue could be from DNA samples or sequencing, not from the assembly.</p>
 <p>Also, I tried to combined 454 assembly that was done by someone with PacBio assembly from Celera assembly.
 I combined singletons, unique contigs, degenerate contigs and 454 contigs and assembled them with CAP3 genome assembly.</p>
-<p>The results show that the total contig size is a lot bigger (17.5 Mbp) and total size of singleton contigs is about 21 Mbp.
+<p>The results show that the total contig size is much greater (17.5 Mbp) and the total size of singleton contigs is about 21 Mbp.
 Max contig size also increases (24 Kbp) as well as N50 size (1.4 Kbp).</p>
 <h1>Conclusion</h1>
 <p>It seems like mushroom genome with PacBio runs into the same problem with other genome assembly projects.

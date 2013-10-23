@@ -15,6 +15,7 @@
                 <h1><a href="/">Grad Hustle </a></h1>
                 <nav><ul>
                                                                                     <li class="active"><a href="/category/linuxunix.html">Linux/Unix</a></li>
+                                    <li ><a href="/category/next-gen-sequencing.html">Next-Gen Sequencing</a></li>
                                                 </ul></nav>
         </header><!-- /#banner -->
         <section id="content" class="body">
@@ -47,7 +48,7 @@ with Linux/Unix command line toos such as pipe, redirection and etc.</p>
 <h2>Display text with <em>cat</em> command</h2>
 <p><strong>cat</strong> is a very simple command you can use to display content in a file.
 Simply run:</p>
-<div class="highlight"><pre><span class="n">cat</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">cat</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -63,7 +64,7 @@ Simply run:</p>
 
 
 <p>You can also run:</p>
-<div class="highlight"><pre><span class="n">cat</span> <span class="o">-</span><span class="n">T</span> <span class="o">-</span><span class="n">e</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">cat</span> <span class="o">-</span><span class="n">T</span> <span class="o">-</span><span class="n">e</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -80,7 +81,7 @@ chr12^I1000^I2000^Iintron^I+<span class="err">$</span>
 
 
 <p>You can also run:</p>
-<div class="highlight"><pre><span class="n">cat</span> <span class="o">-</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">cat</span> <span class="o">-</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -89,7 +90,7 @@ sample.txt.</p>
 <h2>Manipulate columns and rows with <em>awk</em></h2>
 <p><strong>awk</strong> accepts conditional expressions that you can use to select or filter
 data in a text file.</p>
-<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;$2&gt;=2000&amp;&amp;$3&lt;=4000&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">awk</span> <span class="err">&#39;$</span><span class="mi">2</span><span class="o">&gt;=</span><span class="mi">2000</span><span class="o">&amp;&amp;</span><span class="err">$</span><span class="mi">3</span><span class="o">&lt;=</span><span class="mi">4000</span><span class="err">&#39;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -100,7 +101,7 @@ data in a text file.</p>
 
 
 <p>You can also give <strong>awk</strong> a pattern to search for.</p>
-<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;/chr3/&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">awk</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">chr3</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -110,7 +111,7 @@ data in a text file.</p>
 
 
 <p>To search for a match in a specific column use:</p>
-<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;$4 ~/gene/&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">awk</span> <span class="err">&#39;$</span><span class="mi">4</span> <span class="o">~/</span><span class="n">gene</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -121,7 +122,7 @@ data in a text file.</p>
 
 
 <p>To print out specific columns use:</p>
-<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;{print $1,$2,$3}&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">awk</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="p">,</span><span class="err">$</span><span class="mi">2</span><span class="p">,</span><span class="err">$</span><span class="mi">3</span><span class="p">}</span><span class="err">&#39;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -137,7 +138,7 @@ data in a text file.</p>
 
 
 <p>You can also use print command to swap the columns. For example,</p>
-<div class="highlight"><pre><span class="n">awk</span> <span class="s">&#39;{print $2,$3,$1}&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">awk</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">2</span><span class="p">,</span><span class="err">$</span><span class="mi">3</span><span class="p">,</span><span class="err">$</span><span class="mi">1</span><span class="p">}</span><span class="err">&#39;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -155,7 +156,7 @@ data in a text file.</p>
 <h2>Search with <em>grep</em></h2>
 <p>With -c option, grep displays the number of lines that contain a search word.
 We can use this option to count sequences in FASTA format.</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">c</span> <span class="s">&#39;^&gt;&#39;</span> <span class="n">par</span><span class="o">.</span><span class="n">fa</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="o">^&gt;</span><span class="err">&#39;</span> <span class="n">par</span><span class="p">.</span><span class="n">fa</span>
 </pre></div>
 
 
@@ -165,7 +166,7 @@ We can use this option to count sequences in FASTA format.</p>
 
 
 <p>By default, grep will also a substring, therefore</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="n">chr1</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="n">chr1</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -180,7 +181,7 @@ We can use this option to count sequences in FASTA format.</p>
 <p>If you only want to search for "chr1", you need to add -w option.
 In this case, <strong>grep</strong> will only search for a whole word that matches the
 search word.</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">w</span> <span class="n">chr1</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">w</span> <span class="n">chr1</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 
 <span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
 <span class="n">chr1</span>    <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">exon</span>    <span class="o">+</span>
@@ -188,7 +189,7 @@ search word.</p>
 
 
 <p>You can also search for more than one keywords using -e option.</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">e</span> <span class="n">gene</span> <span class="o">-</span><span class="n">e</span> <span class="n">intron</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">e</span> <span class="n">gene</span> <span class="o">-</span><span class="n">e</span> <span class="n">intron</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -200,17 +201,17 @@ search word.</p>
 
 
 <p>You can also use OR operator to do the same thing.</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="s">&#39;gene\|intron&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="err">&#39;</span><span class="n">gene</span><span class="err">\</span><span class="o">|</span><span class="n">intron</span><span class="err">&#39;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
 <p>Or you can use egrep.</p>
-<div class="highlight"><pre><span class="n">egrep</span> <span class="s">&#39;gene|intron&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">egrep</span> <span class="err">&#39;</span><span class="n">gene</span><span class="o">|</span><span class="n">intron</span><span class="err">&#39;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
 <p><strong>grep</strong> also accepts AND operator. To search for "chr1" and "gene" run:</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;chr1\s.*gene&quot;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;chr1\s.*gene&quot;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -220,7 +221,7 @@ search word.</p>
 
 
 <p>To do invert search, use -v option. For example,</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">v</span> <span class="n">exon</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="n">exon</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -233,46 +234,46 @@ search word.</p>
 
 <p>With -l option, <strong>grep</strong> will display a filename instead of a line
 that contain the search word.</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">l</span> <span class="n">chr12</span> <span class="o">*</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">l</span> <span class="n">chr12</span> <span class="o">*</span>
 </pre></div>
 
 
 <p>will give:</p>
-<div class="highlight"><pre><span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
 <p>witn -c, <strong>grep</strong> will also display the number of lines that contain the
 search word in a file.</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">c</span> <span class="n">chr12</span> <span class="o">*</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">c</span> <span class="n">chr12</span> <span class="o">*</span>
 </pre></div>
 
 
 <p>You will get:</p>
-<div class="highlight"><pre><span class="n">sample2</span><span class="o">.</span><span class="n">txt:0</span>
-<span class="n">sample3</span><span class="o">.</span><span class="n">txt:2</span>
-<span class="n">sample4</span><span class="o">.</span><span class="n">txt:0</span>
-<span class="n">sample</span><span class="o">.</span><span class="n">txt:2</span>
+<div class="highlight"><pre><span class="n">sample2</span><span class="p">.</span><span class="n">txt</span><span class="o">:</span><span class="mi">0</span>
+<span class="n">sample3</span><span class="p">.</span><span class="n">txt</span><span class="o">:</span><span class="mi">2</span>
+<span class="n">sample4</span><span class="p">.</span><span class="n">txt</span><span class="o">:</span><span class="mi">0</span>
+<span class="n">sample</span><span class="p">.</span><span class="n">txt</span><span class="o">:</span><span class="mi">2</span>
 </pre></div>
 
 
 <p>With -n, <strong>grep</strong> will display a line number and a line that contain the
 search word.</p>
-<div class="highlight"><pre><span class="nb">grep</span> <span class="o">-</span><span class="n">n</span> <span class="n">chr12</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">n</span> <span class="n">chr12</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
 <p>will give:</p>
-<div class="highlight"><pre><span class="n">sample3</span><span class="o">.</span><span class="n">txt:6:chr12</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">gene</span><span class="p">,,,,,,</span><span class="o">+</span>
-<span class="n">sample3</span><span class="o">.</span><span class="n">txt:7:chr12</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">intron</span><span class="p">,,,,</span><span class="o">+</span>
-<span class="n">sample</span><span class="o">.</span><span class="n">txt:6:chr12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
-<span class="n">sample</span><span class="o">.</span><span class="n">txt:7:chr12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
+<div class="highlight"><pre><span class="n">sample3</span><span class="p">.</span><span class="n">txt</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="n">chr12</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">gene</span><span class="p">,,,,,,</span><span class="o">+</span>
+<span class="n">sample3</span><span class="p">.</span><span class="n">txt</span><span class="o">:</span><span class="mi">7</span><span class="o">:</span><span class="n">chr12</span><span class="p">,,,,</span><span class="mi">1000</span><span class="p">,,,,,,,</span><span class="mi">2000</span><span class="p">,,,,</span><span class="n">intron</span><span class="p">,,,,</span><span class="o">+</span>
+<span class="n">sample</span><span class="p">.</span><span class="n">txt</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="n">chr12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">gene</span>    <span class="o">+</span>
+<span class="n">sample</span><span class="p">.</span><span class="n">txt</span><span class="o">:</span><span class="mi">7</span><span class="o">:</span><span class="n">chr12</span>  <span class="mi">1000</span>    <span class="mi">2000</span>    <span class="n">intron</span>  <span class="o">+</span>
 </pre></div>
 
 
 <h2>Search and substitute with <em>sed</em></h2>
 <p>To substitue a word/pattern use,</p>
-<div class="highlight"><pre><span class="n">sed</span> <span class="s">&#39;s/chr/scaffold/&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">chr</span><span class="o">/</span><span class="n">scaffold</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -288,7 +289,7 @@ search word.</p>
 
 
 <p>You can also remove a word by substituting it with a blank.</p>
-<div class="highlight"><pre><span class="n">sed</span> <span class="s">&#39;s/chr//&#39;</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">chr</span><span class="c1">//&#39; sample.txt</span>
 </pre></div>
 
 
@@ -304,7 +305,7 @@ search word.</p>
 
 
 <p>To add a word to the beginning of the line use:</p>
-<div class="highlight"><pre><span class="n">sed</span> <span class="s">&#39;s/^/chr/&#39;</span> <span class="n">sample2</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/^/</span><span class="n">chr</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">sample2</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -345,7 +346,7 @@ For example, you are handed a file with this format:</p>
 
 
 <p>You can try to use <strong>awk</strong> to print the first three columns.</p>
-<div class="highlight"><pre><span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="s">&#39;,&#39;</span> <span class="s">&#39;{print $1,$2,$3}&#39;</span>
+<div class="highlight"><pre><span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="sc">&#39;,&#39;</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="p">,</span><span class="err">$</span><span class="mi">2</span><span class="p">,</span><span class="err">$</span><span class="mi">3</span><span class="p">}</span><span class="err">&#39;</span>
 </pre></div>
 
 
@@ -362,7 +363,7 @@ For example, you are handed a file with this format:</p>
 
 <p><strong>awk</strong> fails to recognize the columns.
 You can also try to use ",,,," instead.</p>
-<div class="highlight"><pre><span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="s">&#39;,,,,&#39;</span> <span class="s">&#39;{print $1,$2,$3}&#39;</span> <span class="n">sample3</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="err">&#39;</span><span class="p">,,,,</span><span class="sc">&#39; &#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="p">,</span><span class="err">$</span><span class="mi">2</span><span class="p">,</span><span class="err">$</span><span class="mi">3</span><span class="p">}</span><span class="err">&#39;</span> <span class="n">sample3</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -379,7 +380,7 @@ You can also try to use ",,,," instead.</p>
 
 <p>Now we can try using <strong>tr</strong> to collapse multiple commas into one and replace it
 with a tab.</p>
-<div class="highlight"><pre><span class="nb">tr</span> <span class="o">-</span><span class="n">s</span> <span class="s">&#39;,&#39;</span> <span class="s">&#39;\t&#39;</span> <span class="o">&lt;</span> <span class="n">sample3</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">cat</span> <span class="o">-</span><span class="n">Te</span>
+<div class="highlight"><pre><span class="n">tr</span> <span class="o">-</span><span class="n">s</span> <span class="sc">&#39;,&#39;</span> <span class="sc">&#39;\t&#39;</span> <span class="o">&lt;</span> <span class="n">sample3</span><span class="p">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">cat</span> <span class="o">-</span><span class="n">Te</span>
 </pre></div>
 
 
@@ -396,7 +397,7 @@ chr12^I1000^I2000^Iintron^I+<span class="err">$</span>
 
 <p>You can see that multiple commas are converted to a single tab.</p>
 <p><strong>tr</strong> can be used to convert other texts, for example:</p>
-<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;accggtgt&quot;</span> <span class="o">|</span> <span class="nb">tr</span> <span class="n">a</span><span class="o">-</span><span class="n">z</span> <span class="n">A</span><span class="o">-</span><span class="n">Z</span>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;accggtgt&quot;</span> <span class="o">|</span> <span class="n">tr</span> <span class="n">a</span><span class="o">-</span><span class="n">z</span> <span class="n">A</span><span class="o">-</span><span class="n">Z</span>
 </pre></div>
 
 
@@ -406,7 +407,7 @@ chr12^I1000^I2000^Iintron^I+<span class="err">$</span>
 
 
 <p>Or we can use it to convert a soft mask in genome sequence to a hard mask.</p>
-<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;AAAGGTTGAGAGGTGCCaccggtgtCCCAAGGTTTT&quot;</span> <span class="o">|</span> <span class="nb">tr</span> <span class="n">a</span><span class="o">-</span><span class="n">z</span> <span class="n">X</span>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;AAAGGTTGAGAGGTGCCaccggtgtCCCAAGGTTTT&quot;</span> <span class="o">|</span> <span class="n">tr</span> <span class="n">a</span><span class="o">-</span><span class="n">z</span> <span class="n">X</span>
 </pre></div>
 
 
@@ -441,7 +442,7 @@ For example, sample.txt contains:</p>
 
 <p>We can add data from sample4.txt to sample.txt as the sixth column by
 the following command:</p>
-<div class="highlight"><pre><span class="n">paste</span> <span class="n">sample</span><span class="o">.</span><span class="n">txt</span> <span class="n">sample4</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">paste</span> <span class="n">sample</span><span class="p">.</span><span class="n">txt</span> <span class="n">sample4</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -471,7 +472,7 @@ their expression levels like this:</p>
 <p>And genes2.txt contains the same list of genes with different expression
 levels. We can merge them together to get a list of genes with expression
 levels from two datasets with <strong>join</strong>.</p>
-<div class="highlight"><pre><span class="nb">join</span> <span class="n">genes1</span><span class="o">.</span><span class="n">txt</span> <span class="n">genes2</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">join</span> <span class="n">genes1</span><span class="p">.</span><span class="n">txt</span> <span class="n">genes2</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -487,7 +488,7 @@ levels from two datasets with <strong>join</strong>.</p>
 
 <p>It works because genes1.txt and genes2.txt have a common column.</p>
 <p><strong>join</strong> command still works if the data are missing. For example:</p>
-<div class="highlight"><pre><span class="nb">join</span> <span class="n">genes1</span><span class="o">.</span><span class="n">txt</span> <span class="n">genes3</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">join</span> <span class="n">genes1</span><span class="p">.</span><span class="n">txt</span> <span class="n">genes3</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
@@ -503,7 +504,7 @@ levels from two datasets with <strong>join</strong>.</p>
 
 <p>In this case, the expression of Toll gene in genes3.txt is missing.</p>
 <p>We can use -e STRING to replace a missing value with STRING. For example,</p>
-<div class="highlight"><pre><span class="nb">join</span> <span class="o">-</span><span class="n">e</span> <span class="n">NA</span> <span class="n">genes1</span><span class="o">.</span><span class="n">txt</span> <span class="n">genes3</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight"><pre><span class="n">join</span> <span class="o">-</span><span class="n">e</span> <span class="n">NA</span> <span class="n">genes1</span><span class="p">.</span><span class="n">txt</span> <span class="n">genes3</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
